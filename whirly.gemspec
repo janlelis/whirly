@@ -5,8 +5,8 @@ require File.dirname(__FILE__) + "/lib/whirly/version"
 Gem::Specification.new do |gem|
   gem.name          = "whirly"
   gem.version       = Whirly::VERSION
-  gem.summary       = "TOD2O"
-  gem.description   = "TOD2O"
+  gem.summary       = "Whirly: The friendly terminal spinner"
+  gem.description   = "Whirly: The friendly terminal spinner"
   gem.authors       = ["Jan Lelis"]
   gem.email         = ["mail@janlelis.de"]
   gem.homepage      = "https://github.com/janlelis/whirly"
