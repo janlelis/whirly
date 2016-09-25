@@ -21,7 +21,7 @@ gem 'paint' # makes whirly colorful (recommended)
 Whirly.start do
   Whirly.status = "Working on it…"
   sleep 3
-  Whirly.status = "Almoste done…
+  Whirly.status = "Almoste done…"
   sleep 2
 end
 ```
