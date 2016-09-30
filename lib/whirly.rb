@@ -1,7 +1,10 @@
 require_relative "whirly/version"
 require_relative "whirly/spinners"
 
-require "paint"
+begin
+  require "paint"
+rescue LoadError
+end
 
 # TODO configure extra-line below
 # TODO clear previous frame
@@ -19,7 +22,7 @@ module Whirly
   def self.enabled?
     @enabled
   end
-  
+
   def self.paused?
     @paused
   end
@@ -95,7 +98,7 @@ module Whirly
     @enabled = false
     @stream.print CLI_COMMANDS[:show_cursor] if @hide_cursor
     print "TODO" if delete
-    
+
     true
   end
 
