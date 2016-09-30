@@ -46,7 +46,11 @@ module Whirly
     @paused   = false
     @stream   = stream
     @status   = status
-    @spinner  = SPINNERS[spinner.to_s]
+    if spinner.is_a? Hash
+      @spinner = spinner
+    else
+      @spinner  = SPINNERS[spinner.to_s]
+    end
     raise(ArgumentError, "Whirly: Invalid spinner given") if !@spinner || (!@spinner["frames"] && !@spinner["proc"])
     @hide_cursor = hide_cursor
     @interval = (interval || @spinner["interval"] || 100) * 0.001
