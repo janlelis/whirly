@@ -30,9 +30,10 @@ module Whirly
                  use_color: defined?(Paint),
                  color_change_rate: 30,
                  status: nil,
-                 hide_cursor: true)
-    # only actviate if we are on a real terminal
-    return false unless stream.tty?
+                 hide_cursor: true,
+                 non_tty: false)
+    # only actviate if we are on a real terminal (or forced)
+    return false unless stream.tty? || non_tty
 
     # ensure cursor is visible after exit
     at_exit{ @stream.print CLI_COMMANDS[:show_cursor] } if !defined?(@enabled) && hide_cursor
