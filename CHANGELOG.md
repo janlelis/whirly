@@ -3,6 +3,7 @@
 ### Next
 
 - Make paint dependency optional
+- Remove pause feature
 
 ### 0.1.1
 

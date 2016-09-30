@@ -23,10 +23,6 @@ module Whirly
     @enabled
   end
 
-  def self.paused?
-    @paused
-  end
-
   def self.start(stream: $stdout,
                  interval: nil,
                  spinner: "whirly",
@@ -46,7 +42,6 @@ module Whirly
 
     # save options and preprocess
     @enabled  = true
-    @paused   = false
     @stream   = stream
     @status   = status
     if spinner.is_a? Hash
@@ -102,21 +97,6 @@ module Whirly
     true
   end
 
-  def self.pause
-    # unrender
-    @paused = true
-    @stream.print CLI_COMMANDS[:show_cursor] if @hide_cursor
-    if block_given?
-      yield
-      continue
-    end
-  end
-
-  def self.continue
-    @stream.print CLI_COMMANDS[:hide_cursor] if @hide_cursor
-    @paused = false
-  end
-
   def self.unrender
     return unless @current_frame
     current_frame_size = @current_frame.size
@@ -124,7 +104,6 @@ module Whirly
   end
 
   def self.render
-    return if @paused
     unrender
     @current_frame = @proc ? @proc.call : @frames.next
     @current_frame = Paint[@current_frame, @color] if @color
