@@ -18,3 +18,8 @@ cache:
 
 # matrix:
 #   fast_finish: true
+
+matrix:
+  allow_failures:
+    - rvm: jruby-head
+    - rvm: rbx-2
