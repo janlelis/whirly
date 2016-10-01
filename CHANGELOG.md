@@ -6,6 +6,7 @@
 - Remove pause feature
 - Separate configuring into its own method, remember whirly's configuration, can be cleared with the new .reset method
 - Introduce "stop" frames to display when spinner is over
+- Different newline behaviour; append newline by default after spinner ran
 
 ### 0.1.1
 

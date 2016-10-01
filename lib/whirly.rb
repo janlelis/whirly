@@ -23,6 +23,7 @@ module Whirly
     non_tty: false,
     use_color: !!defined?(Paint),
     color_change_rate: 30,
+    append_newline: true,
   }
 
   class << self
@@ -132,6 +133,7 @@ module Whirly
     return false unless @enabled
     @thread.terminate if @thread
     render(stop_frame || @stop) if stop_frame || @stop
+    @options[:stream].puts if @options[:append_newline]
     @options[:stream].print CLI_COMMANDS[:show_cursor] if @options[:hide_cursor]
     @enabled = false
 
@@ -148,7 +150,8 @@ module Whirly
 
   def self.unrender
     return unless @current_frame
-    @options[:stream].print "\n\e[s#{' ' * @current_frame.size}\e[u\e[1A"
+    # @options[:stream].print "\n\e[s#{' ' * @current_frame.size}\e[u\e[1A"
+    @options[:stream].print "\e[s#{' ' * @current_frame.size}\e[u"
   end
 
   def self.render(next_frame = nil)
@@ -158,8 +161,8 @@ module Whirly
     @current_frame = Paint[@current_frame, @color] if @color
     @current_frame += "  #{@status}" if @status
 
-    # @stream.print "\e[s#{@current_frame}\e[u"
-    @options[:stream].print "\n\e[s#{@current_frame}\e[u\e[1A"
+    # @options[:stream].print "\n\e[s#{@current_frame}\e[u\e[1A"
+    @options[:stream].print "\e[s#{@current_frame}\e[u"
   end
 
   def self.initialize_color

@@ -83,6 +83,22 @@ describe Whirly do
 
       assert_match /STOP/, @capture.string
     end
+
+    it "appends newline when stopping" do
+      Whirly.start(hide_cursor: false)
+      sleep 0.1
+      Whirly.stop
+
+      assert_match /\n\z/, @capture.string
+    end
+
+    it "appends no newline when stopping when :append_newline option is false" do
+      Whirly.start(hide_cursor: false, append_newline: false)
+      sleep 0.1
+      Whirly.stop
+
+      assert_match /[^\n]\z/, @capture.string
+    end
   end
 
   describe "Configure and Reset" do
