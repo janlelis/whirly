@@ -31,7 +31,18 @@ end
 
 
 # # #
+# Run Specs
+
+desc "#{gemspec.name} | Spec"
+task :spec do
+  sh "for file in spec/*.rb; do ruby $file; done"
+end
+task default: :spec
+
+
+# # #
 # Update spinners
+
 desc "Update spinners"
 task :update_spinners do
   sh "git submodule update"
