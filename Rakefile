@@ -45,6 +45,6 @@ task default: :spec
 
 desc "Update spinners"
 task :update_spinners do
-  sh "git submodule update"
+  sh "git submodule update --recursive --remote"
   cp "data/external/cli-spinners/spinners.json", "data/spinners.json"
 end

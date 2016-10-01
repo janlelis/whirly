@@ -7,6 +7,7 @@
 - Separate configuring into its own method, remember whirly's configuration, can be cleared with the new .reset method
 - Introduce "stop" frames to display when spinner is over
 - Different newline behaviour; append newline by default after spinner ran. Use position: "below" for old behaviour
+- Update CLI spinners to v0.3.0 (two new spinners)
 
 ### 0.1.1
 
