@@ -10,7 +10,7 @@ describe Whirly do
     Whirly.configure(non_tty: true, stream: @capture)
   end
 
-  describe "Usage" do
+  describe "General Usage" do
     it "outputs every frame of the spinner" do
       spinner = { "frames" => ["first", "second", "third"], "interval" => 5 }
 
@@ -31,6 +31,28 @@ describe Whirly do
       assert_match /frame/, @capture.string
     end
   end
+
+  describe "Status Updates" do
+    it "shows status text alongside spinner" do
+      Whirly.start
+      Whirly.status = "Fetching…"
+      sleep 0.2
+      Whirly.status = "Updates…"
+      sleep 0.2
+      Whirly.stop
+
+      assert_match /Fetching.*Updates…/m, @capture.string
+    end
+
+    it "shows initial status" do
+      Whirly.start(status: "Initial")
+      sleep 0.1
+      Whirly.stop
+
+      assert_match /Initial/, @capture.string
+    end
+  end
+
 
   describe "Configure and Reset" do
     it "can be configured before starting" do
