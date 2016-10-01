@@ -53,6 +53,37 @@ describe Whirly do
     end
   end
 
+  describe "Finishing" do
+    it "shows spinner finished frame if stop is set in spinner definition" do
+      spinner = { "frames" => ["first", "second", "third"], "stop" => "STOP", "interval" => 5 }
+
+      Whirly.start(spinner: spinner)
+      sleep 0.1
+      Whirly.stop
+
+      assert_match /STOP/, @capture.string
+    end
+
+    it "shows spinner finished frame if stop frame is passed when stopping" do
+      spinner = { "frames" => ["first", "second", "third"], "interval" => 5 }
+
+      Whirly.start(spinner: spinner)
+      sleep 0.1
+      Whirly.stop("STOP")
+
+      assert_match /STOP/, @capture.string
+    end
+
+    it "shows spinner finished frame if stop frame is passed when starting" do
+      spinner = { "frames" => ["first", "second", "third"], "interval" => 5 }
+
+      Whirly.start(spinner: spinner, stop: "STOP")
+      sleep 0.1
+      Whirly.stop
+
+      assert_match /STOP/, @capture.string
+    end
+  end
 
   describe "Configure and Reset" do
     it "can be configured before starting" do

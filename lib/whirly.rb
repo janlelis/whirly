@@ -80,6 +80,7 @@ module Whirly
     spinner   = configure_spinner(@options[:spinner])
     @frames   = configure_frames(spinner)
     @interval = (@options[:interval] || spinner["interval"] || 100) * 0.001
+    @stop     = @options[:stop] || spinner["stop"]
     @status   = @options[:status]
   end
 
@@ -127,12 +128,12 @@ module Whirly
     true
   end
 
-  def self.stop#(delete = false)
+  def self.stop(stop_frame = nil)
     return false unless @enabled
     @thread.terminate if @thread
+    render(stop_frame || @stop) if stop_frame || @stop
     @options[:stream].print CLI_COMMANDS[:show_cursor] if @options[:hide_cursor]
     @enabled = false
-    # print "TODO" if delete
 
     true
   end
@@ -150,10 +151,10 @@ module Whirly
     @options[:stream].print "\n\e[s#{' ' * @current_frame.size}\e[u\e[1A"
   end
 
-  def self.render
+  def self.render(next_frame = nil)
     unrender
 
-    @current_frame = @frames.next
+    @current_frame = next_frame || @frames.next
     @current_frame = Paint[@current_frame, @color] if @color
     @current_frame += "  #{@status}" if @status
 

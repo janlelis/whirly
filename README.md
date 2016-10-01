@@ -44,10 +44,10 @@ Whirly.start spinner: "pong", use_color: false, status: "The Game of Pong" do
 end
 ```
 
-### Slower Interval, Don't Hide Cursor
+### Slower Interval, Don't Hide Cursor, Custom Stop Frame
 
 ```ruby
-Whirly.start spinner: "clock", interval: 1000, hide_cursor: false do
+Whirly.start spinner: "clock", interval: 1000, hide_cursor: false, stop: "⏰" do
   sleep 5
 end
 ```
