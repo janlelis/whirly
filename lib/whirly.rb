@@ -113,6 +113,7 @@ module Whirly
 
     # start spinner loop
     @thread = Thread.new do
+      @current_frame = nil
       while true # it's just a spinner, no exact timing here
         next_color if @color
         render
