@@ -24,6 +24,7 @@ module Whirly
     use_color: !!defined?(Paint),
     color_change_rate: 30,
     append_newline: true,
+    position: "normal"
   }
 
   class << self
@@ -151,8 +152,11 @@ module Whirly
 
   def self.unrender
     return unless @current_frame
-    # @options[:stream].print "\n\e[s#{' ' * @current_frame.size}\e[u\e[1A"
-    @options[:stream].print "\e[s#{' ' * @current_frame.size}\e[u"
+    if @options[:position] == "below"
+      @options[:stream].print "\n\e[s#{' ' * @current_frame.size}\e[u\e[1A"
+    else
+      @options[:stream].print "\e[s#{' ' * @current_frame.size}\e[u"
+    end
   end
 
   def self.render(next_frame = nil)
@@ -162,8 +166,11 @@ module Whirly
     @current_frame = Paint[@current_frame, @color] if @color
     @current_frame += "  #{@status}" if @status
 
-    # @options[:stream].print "\n\e[s#{@current_frame}\e[u\e[1A"
-    @options[:stream].print "\e[s#{@current_frame}\e[u"
+    if @options[:position] == "below"
+      @options[:stream].print "\n\e[s#{@current_frame}\e[u\e[1A"
+    else
+      @options[:stream].print "\e[s#{@current_frame}\e[u"
+    end
   end
 
   def self.initialize_color

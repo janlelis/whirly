@@ -101,6 +101,17 @@ describe Whirly do
     end
   end
 
+  describe "Position" do
+    it "will render spinner 1 line further below (useful for spinning while git cloning)" do
+      Whirly.start(position: "below")
+      sleep 0.1
+      Whirly.stop
+
+      assert_match /\n.*\e\[1A/m, @capture.string
+    end
+  end
+
+
   describe "Configure and Reset" do
     it "can be configured before starting" do
       Whirly.configure spinner: "dots", interval: 5
