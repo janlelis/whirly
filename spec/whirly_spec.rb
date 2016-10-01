@@ -1,6 +1,6 @@
 require_relative "../lib/whirly"
 require "minitest/autorun"
-require "irbtools/binding"
+# require "irbtools/binding"
 require "stringio"
 
 describe Whirly do
