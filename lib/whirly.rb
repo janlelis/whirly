@@ -15,59 +15,99 @@ module Whirly
     show_cursor: "\x1b[?25h",
   }
 
+  DEFAULT_OPTIONS = {
+    spinner: "whirly",
+    stream: $stdout,
+    status: nil,
+    hide_cursor: true,
+    non_tty: false,
+    use_color: !!defined?(Paint),
+    color_change_rate: 30,
+  }
+
   class << self
     attr_accessor :status
-  end
+    attr_reader :options
 
-  def self.enabled?
-    @enabled
-  end
-
-  def self.start(stream: $stdout,
-                 interval: nil,
-                 spinner: "whirly",
-                 use_color: defined?(Paint),
-                 color_change_rate: 30,
-                 status: nil,
-                 hide_cursor: true,
-                 non_tty: false)
-    # only actviate if we are on a real terminal (or forced)
-    return false unless stream.tty? || non_tty
-
-    # ensure cursor is visible after exit
-    at_exit{ @stream.print CLI_COMMANDS[:show_cursor] } if !defined?(@enabled) && hide_cursor
-
-    # only activate once
-    return false if @enabled
-
-    # save options and preprocess
-    @enabled  = true
-    @stream   = stream
-    @status   = status
-    if spinner.is_a? Hash
-      @spinner = spinner
-    else
-      @spinner  = SPINNERS[spinner.to_s]
+    def enabled?
+      !!(defined?(@enabled) && @enabled)
     end
-    raise(ArgumentError, "Whirly: Invalid spinner given") if !@spinner || (!@spinner["frames"] && !@spinner["proc"])
-    @hide_cursor = hide_cursor
-    @interval = (interval || @spinner["interval"] || 100) * 0.001
-    @frames   = @spinner["frames"] && @spinner["frames"].cycle
-    @proc     = @spinner["proc"]
 
-    # init color
-    if use_color
-      if defined?(Paint)
-        @color = "%.6x" % rand(16777216)
-        @color_directions = (0..2).map{ |e| rand(3) - 1 }
-        @color_change_rate = color_change_rate
-      else
-        warn "Whirly warning: Using colors requires the paint gem"
+    def configured?
+      !!(defined?(@configured) && @configured)
+    end
+  end
+
+  # set spinner directly or lookup
+  def self.configure_spinner(spinner_option)
+    if spinner_option.is_a? Hash
+      spinner = spinner_option.dup
+    else
+      spinner = SPINNERS[spinner_option].dup
+    end
+
+    # validate spinner
+    if !spinner || (!spinner["frames"] && !spinner["proc"])
+      raise(ArgumentError, "Whirly: Invalid spinner given")
+    end
+
+    spinner
+  end
+
+  # frames can be generated from enumerables or procs
+  def self.configure_frames(spinner)
+    if spinner["frames"]
+      frames = spinner["frames"].cycle
+    else
+      frames = spinner["proc"].dup
+      class << frames
+        alias next call
       end
     end
 
+    frames
+  end
+
+  # save options and preprocess, set defaults if value is still unknown
+  def self.configure(**options)
+    if !defined?(@configured) || !@configured || !defined?(@options) || !@options
+      @options = DEFAULT_OPTIONS.dup
+      @configured = true
+    end
+
+    @options.merge!(options)
+
+    spinner   = configure_spinner(@options[:spinner])
+    @frames   = configure_frames(spinner)
+    @interval = (@options[:interval] || spinner["interval"] || 100) * 0.001
+    @status   = @options[:status]
+  end
+
+  def self.start(**options)
+    # optionally overwrite configuration on start
+    configure(**options)
+
+    # ensure cursor is visible after exit the program (only register for the very first time)
+    if (!defined?(@at_exit_handler_registered) || !@at_exit_handler_registered) && @options[:hide_cursor]
+      @at_exit_handler_registered = true
+      stream = @options[:stream]
+      at_exit{ stream.print CLI_COMMANDS[:show_cursor] }
+    end
+
+    # only enable once
+    return false if defined?(@enabled) && @enabled
+
+    # set status to enabled
+    @enabled = true
+
+    # only do something if we are on a real terminal (or forced)
+    return false unless @options[:stream].tty? || @options[:non_tty]
+
+    # init color
+    initialize_color if @options[:use_color]
+
     # hide cursor
-    @stream.print CLI_COMMANDS[:hide_cursor] if @hide_cursor
+    @options[:stream].print CLI_COMMANDS[:hide_cursor] if @options[:hide_cursor]
 
     # start spinner loop
     @thread = Thread.new do
@@ -78,7 +118,7 @@ module Whirly
       end
     end
 
-    # idiomatic block syntax
+    # idiomatic block syntax support
     if block_given?
       yield
       Whirly.stop
@@ -87,34 +127,52 @@ module Whirly
     true
   end
 
-  def self.stop(delete = false)
+  def self.stop#(delete = false)
     return false unless @enabled
-    @thread.terminate
+    @thread.terminate if @thread
+    @options[:stream].print CLI_COMMANDS[:show_cursor] if @options[:hide_cursor]
     @enabled = false
-    @stream.print CLI_COMMANDS[:show_cursor] if @hide_cursor
-    print "TODO" if delete
+    # print "TODO" if delete
 
     true
   end
 
+  def self.reset
+    at_exit_handler_registered = defined?(@at_exit_handler_registered) && @at_exit_handler_registered
+    instance_variables.each{ |iv| remove_instance_variable(iv) }
+    @at_exit_handler_registered = at_exit_handler_registered
+  end
+
+  # - - -
+
   def self.unrender
     return unless @current_frame
-    current_frame_size = @current_frame.size
-    @stream.print "\n\e[s#{' ' * current_frame_size}\e[u\e[1A"
+    @options[:stream].print "\n\e[s#{' ' * @current_frame.size}\e[u\e[1A"
   end
 
   def self.render
     unrender
-    @current_frame = @proc ? @proc.call : @frames.next
+
+    @current_frame = @frames.next
     @current_frame = Paint[@current_frame, @color] if @color
     @current_frame += "  #{@status}" if @status
+
     # @stream.print "\e[s#{@current_frame}\e[u"
-    @stream.print "\n\e[s#{@current_frame}\e[u\e[1A"
+    @options[:stream].print "\n\e[s#{@current_frame}\e[u\e[1A"
+  end
+
+  def self.initialize_color
+    if !defined?(Paint)
+      warn "Whirly warning: Using colors requires the paint gem"
+    else
+      @color = "%.6x" % rand(16777216)
+      @color_directions = (0..2).map{ |e| rand(3) - 1 }
+    end
   end
 
   def self.next_color
     @color = @color.scan(/../).map.with_index{ |c, i|
-      color_change = rand(@color_change_rate) * @color_directions[i]
+      color_change = rand(@options[:color_change_rate]) * @color_directions[i]
       nc = c.to_i(16) + color_change
       if nc <= 0
         nc = 0

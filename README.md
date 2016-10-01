@@ -52,6 +52,22 @@ Whirly.start spinner: "clock", interval: 1000, hide_cursor: false do
 end
 ```
 
+### Configure Before Start
+
+```ruby
+Whirly.configure spinner: "dots"
+
+Whirly.start do
+  sleep 3 # will use dots
+end
+
+puts "something"
+
+Whirly.start do
+  sleep 3 # will use dots again
+end
+```
+
 ## Included Spinners & Custom Spinners
 
 - See `data/cursors.json`

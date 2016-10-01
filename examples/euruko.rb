@@ -1,4 +1,4 @@
-require_relative 'lib/whirly'
+require_relative '../lib/whirly'
 require 'paint'
 
 # # # Whirly
@@ -111,7 +111,7 @@ puts "Time is over"
 print "\033c"
 puts Paint["Get WHIRLY", :bold]
 
-Whirly.start status: 'https://github.com/janlelis/whirly' do
+Whirly.start spinner: "whirly", status: "https://github.com/janlelis/whirly" do
   sleep 60
 end
 
