@@ -163,7 +163,7 @@ module Whirly
     unrender
 
     @current_frame = next_frame || @frames.next
-    @current_frame = Paint[@current_frame, @color] if @color
+    @current_frame = Paint[@current_frame, @color] if @options[:use_color]
     @current_frame += "  #{@status}" if @status
 
     if @options[:position] == "below"
