@@ -1,6 +1,8 @@
 require_relative "whirly/version"
 require_relative "whirly/spinners"
 
+require "unicode/display_width"
+
 begin
   require "paint"
 rescue LoadError
@@ -22,6 +24,7 @@ module Whirly
     color_change_rate: 30,
     append_newline: true,
     position: "normal",
+    ambiguous_character_width: 1
   }.freeze
 
   SOFT_DEFAULT_OPTIONS = {
@@ -173,9 +176,10 @@ module Whirly
   def self.unrender
     return unless @current_frame
     if @options[:position] == "below"
-      @options[:stream].print "\n\e[s#{' ' * @current_frame.size}\e[u\e[1A"
+      @options[:stream].print "\n\e[s#{' ' * (Unicode::DisplayWidth.of(@current_frame, @options[:ambiguous_character_width]) + 1)}\e[u\e[1A"
     else
-      @options[:stream].print "\e[s#{' ' * @current_frame.size}\e[u"
+      # p Unicode::DisplayWidth.of(@current_frame, @options[:ambiguous_character_width])
+      @options[:stream].print "\e[s#{' ' * (Unicode::DisplayWidth.of(@current_frame, @options[:ambiguous_character_width]) + 1)}\e[u"
     end
   end
 

@@ -8,6 +8,7 @@
 - Introduce "stop" frames to display when spinner is over
 - Different newline behaviour; append newline by default after spinner ran. Use position: "below" for old behaviour
 - Support multiple frame modes: "linear", "random", "reverse", "swing"
+- Proper unrendering (use unicode-display\_width)
 - Update CLI spinners to v0.3.0 (two new spinners)
 
 ### 0.1.1
