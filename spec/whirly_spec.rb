@@ -101,7 +101,41 @@ describe Whirly do
     end
   end
 
-  describe "Position" do
+  describe "Spinner" do
+    describe "Frame Mode" do
+      it "can be set to random" do
+        spinner = { "frames" => "A".."H", "mode" => "random", "interval" => 10 }
+
+        Whirly.start(spinner: spinner)
+        sleep 0.3
+        Whirly.stop
+
+        refute /A.*B.*C.*D.*E.*F.*G.*H/m =~ @capture.string
+      end
+
+      it "can be set to reverse" do
+        spinner = { "frames" => "A".."H", "mode" => "reverse", "interval" => 10 }
+
+        Whirly.start(spinner: spinner)
+        sleep 0.3
+        Whirly.stop
+
+        assert_match /H.*G.*F.*E.*D.*C.*B.*A/m, @capture.string
+      end
+
+      it "can be set to swing" do
+        spinner = { "frames" => "A".."H", "mode" => "swing", "interval" => 10 }
+
+        Whirly.start(spinner: spinner)
+        sleep 0.3
+        Whirly.stop
+
+        assert_match /A.*B.*C.*D.*E.*F.*G.*H.*G.*F.*E.*D.*C.*B.*A/m, @capture.string
+      end
+    end
+  end
+
+  describe "Positioning" do
     it "will render spinner 1 line further below (useful for spinning while git cloning)" do
       Whirly.start(position: "below")
       sleep 0.1

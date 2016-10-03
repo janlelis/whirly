@@ -6,14 +6,11 @@ begin
 rescue LoadError
 end
 
-# TODO configure extra-line below
-# TODO clear previous frame
-
 module Whirly
   CLI_COMMANDS = {
     hide_cursor: "\x1b[?25l",
     show_cursor: "\x1b[?25h",
-  }
+  }.freeze
 
   DEFAULT_OPTIONS = {
     spinner: "whirly",
@@ -24,8 +21,13 @@ module Whirly
     use_color: !!defined?(Paint),
     color_change_rate: 30,
     append_newline: true,
-    position: "normal"
-  }
+    position: "normal",
+  }.freeze
+
+  SOFT_DEFAULT_OPTIONS = {
+    mode: "linear",
+    interval: 100,
+  }.freeze
 
   class << self
     attr_accessor :status
@@ -59,9 +61,22 @@ module Whirly
   # frames can be generated from enumerables or procs
   def self.configure_frames(spinner)
     if spinner["frames"]
-      frames = spinner["frames"].cycle
+      case spinner["mode"]
+      when "swing"
+        frames = (spinner["frames"].to_a + spinner["frames"].to_a[1..-2].reverse).cycle
+      when "random"
+        frame_pool = spinner["frames"].to_a
+        frames = ->(){ frame_pool.sample }
+      when "reverse"
+        frames = spinner["frames"].to_a.reverse.cycle
+      else
+        frames = spinner["frames"].cycle
+      end
     else
       frames = spinner["proc"].dup
+    end
+
+    if frames.is_a? Proc
       class << frames
         alias next call
       end
@@ -80,8 +95,11 @@ module Whirly
     @options.merge!(options)
 
     spinner   = configure_spinner(@options[:spinner])
-    @frames   = configure_frames(spinner)
-    @interval = (@options[:interval] || spinner["interval"] || 100) * 0.001
+    spinner_overwrites = {}
+    spinner_overwrites["mode"] = @options[:mode] if @options.key?(:mode)
+    @frames   = configure_frames(spinner.merge(spinner_overwrites))
+
+    @interval = (@options[:interval] || spinner["interval"] || SOFT_DEFAULT_OPTIONS[:interval]) * 0.001
     @stop     = @options[:stop] || spinner["stop"]
     @status   = @options[:status]
   end
