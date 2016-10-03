@@ -47,7 +47,7 @@ module Whirly
     if spinner_option.is_a? Hash
       spinner = spinner_option.dup
     else
-      spinner = SPINNERS[spinner_option].dup
+      spinner = SPINNERS[spinner_option] && SPINNERS[spinner_option].dup
     end
 
     # validate spinner
@@ -72,8 +72,10 @@ module Whirly
       else
         frames = spinner["frames"].cycle
       end
-    else
+    elsif spinner["proc"]
       frames = spinner["proc"].dup
+    else
+      raise(ArgumentError, "Whirly: Invalid spinner given")
     end
 
     if frames.is_a? Proc
