@@ -1,6 +1,8 @@
 require_relative '../lib/whirly'
 require 'paint'
 
+# Lightning talk at EuRuKo 2016
+
 # # # Whirly
 
 print "\033c"
@@ -22,16 +24,6 @@ puts
 puts "Done"
 sleep 5
 
-
-
-
-
-
-
-
-
-
-
 # # # Earth
 
 print "\033c"
@@ -48,14 +40,6 @@ puts
 puts "Done"
 sleep 5
 
-
-
-
-
-
-
-
-
 # # # Pong Game
 
 print "\033c"
@@ -65,21 +49,11 @@ Whirly.start spinner: "pong", use_color: false, status: "Two computers in a game
   sleep 9
 end
 
-
 puts
 puts
 puts
 puts "Done"
 sleep 5
-
-
-
-
-
-
-
-
-
 
 # # # Ticking Clock
 
@@ -95,18 +69,7 @@ puts
 puts
 puts "Time is over"
 
-
-
-
-
-
-
-
-
-
-
 # # # URL
-
 
 print "\033c"
 puts Paint["Get WHIRLY", :bold]
@@ -114,4 +77,3 @@ puts Paint["Get WHIRLY", :bold]
 Whirly.start spinner: "whirly", status: "https://github.com/janlelis/whirly" do
   sleep 60
 end
-

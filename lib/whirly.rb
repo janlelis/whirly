@@ -9,6 +9,8 @@ rescue LoadError
 end
 
 module Whirly
+  @configured = false
+
   CLI_COMMANDS = {
     hide_cursor: "\x1b[?25l",
     show_cursor: "\x1b[?25h",
@@ -24,7 +26,8 @@ module Whirly
     color_change_rate: 30,
     append_newline: true,
     position: "normal",
-    ambiguous_character_width: 1
+    ambiguous_character_width: 1,
+    spinner_packs: [:whirly, :cli],
   }.freeze
 
   SOFT_DEFAULT_OPTIONS = {
@@ -41,7 +44,7 @@ module Whirly
     end
 
     def configured?
-      !!(defined?(@configured) && @configured)
+      !!(@configured)
     end
   end
 
@@ -50,7 +53,16 @@ module Whirly
     if spinner_option.is_a? Hash
       spinner = spinner_option.dup
     else
-      spinner = SPINNERS[spinner_option] && SPINNERS[spinner_option].dup
+      spinner = nil
+      catch(:found){
+        @options[:spinner_packs].each{ |spinner_pack|
+          spinners = Whirly::Spinners.const_get(spinner_pack.to_s.upcase)
+          if spinners[spinner_option]
+            spinner = spinners[spinner_option].dup
+            throw(:found)
+          end
+        }
+      }
     end
 
     # validate spinner
@@ -99,7 +111,7 @@ module Whirly
 
     @options.merge!(options)
 
-    spinner   = configure_spinner(@options[:spinner])
+    spinner = configure_spinner(@options[:spinner])
     spinner_overwrites = {}
     spinner_overwrites["mode"] = @options[:mode] if @options.key?(:mode)
     @frames   = configure_frames(spinner.merge(spinner_overwrites))
@@ -169,6 +181,7 @@ module Whirly
     at_exit_handler_registered = defined?(@at_exit_handler_registered) && @at_exit_handler_registered
     instance_variables.each{ |iv| remove_instance_variable(iv) }
     @at_exit_handler_registered = at_exit_handler_registered
+    @configured = false
   end
 
   # - - -

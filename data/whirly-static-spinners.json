@@ -1,0 +1,86 @@
+{
+  "roman_numerals": {
+    "interval": 90,
+    "mode": "swing",
+    "frames": [
+      "Ⅰ",
+      "Ⅱ",
+      "Ⅲ",
+      "Ⅳ",
+      "Ⅴ",
+      "Ⅵ",
+      "Ⅶ",
+      "Ⅷ",
+      "Ⅸ",
+      "Ⅹ"
+    ]
+  },
+  "double_mark": {
+    "interval": 120,
+    "mode": "random",
+    "frames": [
+      "⁇",
+      "⁈",
+      "⁉",
+      "‼"
+    ]
+  },
+  "heart_exclamation": {
+    "interval": 45,
+    "frames": [
+      "❢",
+      "❣"
+    ]
+  },
+  "pencil": {
+    "interval": 200,
+    "frames": [
+      "✏",
+      "✎"
+    ]
+  },
+  "bars": {
+    "interval": 80,
+    "mode": "swing",
+    "frames": [
+      "𝍠",
+      "𝍡",
+      "𝍢",
+      "𝍣",
+      "𝍤"
+    ]
+  },
+  "dice": {
+    "interval": 100,
+    "mode": "random",
+    "frames": [
+      "⚀",
+      "⚁",
+      "⚂",
+      "⚃",
+      "⚄",
+      "⚅"
+    ]
+  },
+  "hanoi": {
+    "interval": 150,
+    "mode": "swing",
+    "frames": [
+      "𝍥",
+      "𝍦",
+      "𝍧",
+      "𝍨"
+    ]
+  },
+  "vertical_bars": {
+    "interval": 80,
+    "mode": "swing",
+    "frames": [
+      "𝍩",
+      "𝍪",
+      "𝍫",
+      "𝍬",
+      "𝍭"
+    ]
+  }
+}

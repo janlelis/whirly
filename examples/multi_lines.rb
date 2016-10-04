@@ -1,7 +1,9 @@
 require_relative "../lib/whirly"
 require "paint"
 
-Whirly.configure(spinner: "dots", stop: "✔️")
+# Demonstrate the look of using multiple spinners
+
+Whirly.configure(spinner: "dots", stop: "✔")
 
 Whirly.start status: "Processing" do
   sleep 2
