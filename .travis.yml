@@ -22,4 +22,5 @@ cache:
 matrix:
   allow_failures:
     - rvm: jruby-head
+    - rvm: jruby-9000
     - rvm: rbx-2
