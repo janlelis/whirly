@@ -129,6 +129,12 @@ The number of milliseconds between changing to the next spinner icon frame.
 
 If set to `2`, ambiguous Unicode charatcers will be treated as 2 colums wide. See [unicode-display_width](https://github.com/janlelis/unicode-display_width) for more details.
 
+#### `ansi_escape_mode:`
+
+*Default:* `"restore"`
+
+Can be set to `"line"` to use an different way of producing ANSI escape sequences (experimental)
+
 #### `append_newline:`
 
 *Default:* `true`

@@ -189,6 +189,22 @@ describe Whirly do
     end
   end
 
+  describe "Ansi Escape Mode" do
+    it "will use save and restore ANSI sequences as default (or when 'restore') is given" do
+      Whirly.start
+      short_sleep
+      Whirly.stop
+      assert_match /\e\[s.*\e\[u/m, @capture.string
+    end
+
+    it "will use beginning of line and clear line ANSI sequences when 'line' is given" do
+      Whirly.start(ansi_escape_mode: 'line')
+      medium_sleep
+      Whirly.stop
+      assert_match /\e\[G.*\e\[1K/m, @capture.string
+    end
+  end
+
   describe "Positioning" do
     it "will render spinner 1 line further below (useful for spinning while git cloning)" do
       Whirly.start(position: "below")
@@ -198,7 +214,6 @@ describe Whirly do
       assert_match /\n.*\e\[1A/m, @capture.string
     end
   end
-
 
   describe "Configure and Reset" do
     it "can be configured before starting" do

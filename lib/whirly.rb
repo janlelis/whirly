@@ -17,22 +17,23 @@ module Whirly
   }.freeze
 
   DEFAULT_OPTIONS = {
-    spinner: "whirly",
-    stream: $stdout,
-    status: nil,
-    hide_cursor: true,
-    non_tty: false,
+    ambiguous_character_width: 1,
+    ansi_escape_mode: "restore",
+    append_newline: true,
     color: !!defined?(Paint),
     color_change_rate: 30,
-    append_newline: true,
+    hide_cursor: true,
+    non_tty: false,
     position: "normal",
-    ambiguous_character_width: 1,
+    spinner: "whirly",
     spinner_packs: [:whirly, :cli],
+    status: nil,
+    stream: $stdout,
   }.freeze
 
   SOFT_DEFAULT_OPTIONS = {
-    mode: "linear",
     interval: 100,
+    mode: "linear",
   }.freeze
 
   class << self
@@ -193,10 +194,13 @@ module Whirly
 
   def self.unrender
     return unless @current_frame
-    if @options[:position] == "below"
-      @options[:stream].print "\n\e[s#{' ' * (Unicode::DisplayWidth.of(@current_frame, @options[:ambiguous_character_width]) + 1)}\e[u\e[1A"
-    else
-      @options[:stream].print "\e[s#{' ' * (Unicode::DisplayWidth.of(@current_frame, @options[:ambiguous_character_width]) + 1)}\e[u"
+    case @options[:ansi_escape_mode]
+    when "restore"
+      @options[:stream].print(render_prefix + (
+          ' ' * (Unicode::DisplayWidth.of(@current_frame, @options[:ambiguous_character_width]) + 1)
+      ) + render_suffix)
+    when "line"
+      @options[:stream].print "\e[1K"
     end
   end
 
@@ -207,11 +211,22 @@ module Whirly
     @current_frame = Paint[@current_frame, @color] if @options[:color]
     @current_frame += "  #{@status}" if @status
 
-    if @options[:position] == "below"
-      @options[:stream].print "\n\e[s#{@current_frame}\e[u\e[1A"
-    else
-      @options[:stream].print "\e[s#{@current_frame}\e[u"
-    end
+    @options[:stream].print(render_prefix + @current_frame.to_s + render_suffix)
+  end
+
+  def self.render_prefix
+    res = ""
+    res << "\n" if @options[:position] == "below"
+    res << "\e[s" if @options[:ansi_escape_mode] == "restore"
+    res << "\e[G" if @options[:ansi_escape_mode] == "line"
+    res
+  end
+
+  def self.render_suffix
+    res = ""
+    res << "\e[u" if @options[:ansi_escape_mode] == "restore"
+    res << "\e[1A" if @options[:position] == "below"
+    res
   end
 
   def self.initialize_color

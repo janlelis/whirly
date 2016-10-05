@@ -14,6 +14,7 @@
 - Update CLI spinners to v0.3.0 (two new spinners)
 - Rename option :use_color to just :color
 - Option to set spinner can also take frames or proc directly
+- Add ANSI escape mode option
 
 ### 0.1.1
 
