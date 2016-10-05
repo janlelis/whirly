@@ -117,7 +117,7 @@ describe Whirly do
       short_sleep
       Whirly.stop
 
-      assert_match /\e\[u\n\z/, @capture.string
+      assert_match /\e8\n\z/, @capture.string
     end
   end
 
@@ -202,7 +202,7 @@ describe Whirly do
       Whirly.start
       short_sleep
       Whirly.stop
-      assert_match /\e\[s.*\e\[u/m, @capture.string
+      assert_match /\e7.*\e8/m, @capture.string
     end
 
     it "will use beginning of line and clear line ANSI sequences when 'line' is given" do

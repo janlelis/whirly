@@ -220,14 +220,14 @@ module Whirly
   def self.render_prefix
     res = ""
     res << "\n" if @options[:position] == "below"
-    res << "\e[s" if @options[:ansi_escape_mode] == "restore"
+    res << "\e7" if @options[:ansi_escape_mode] == "restore"
     res << "\e[G" if @options[:ansi_escape_mode] == "line"
     res
   end
 
   def self.render_suffix
     res = ""
-    res << "\e[u" if @options[:ansi_escape_mode] == "restore"
+    res << "\e8" if @options[:ansi_escape_mode] == "restore"
     res << "\e[1A" if @options[:position] == "below"
     res
   end

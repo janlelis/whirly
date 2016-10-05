@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.2.1
+
+- Use macOS terminal app compatible ANSI sequences
+
 ### 0.2.0
 
 - Make paint dependency optional
