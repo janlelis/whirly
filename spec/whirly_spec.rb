@@ -4,11 +4,11 @@ require "minitest/autorun"
 require "stringio"
 
 def short_sleep
-  sleep 0.1
+  sleep 0.15
 end
 
 def medium_sleep
-  sleep 0.4
+  sleep 0.5
 end
 
 def long_sleep
