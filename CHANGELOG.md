@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### Next
+### 0.2.0
 
 - Make paint dependency optional
 - Remove pause feature

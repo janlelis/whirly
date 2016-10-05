@@ -1,15 +1,17 @@
 # Whirly [![[version]](https://badge.fury.io/rb/whirly.svg)](http://badge.fury.io/rb/whirly)  [![[travis]](https://travis-ci.org/janlelis/whirly.png)](https://travis-ci.org/janlelis/whirly)
 
-Meet Whirly: The simple and colorful terminal spinner for Ruby. It comes with X spinners, and also includes those from the [cli-spinners](https://github.com/sindresorhus/cli-spinners) project. It easily customizable.
+A simple, colorful and customizable terminal spinner library for Ruby. It comes with 17 custom spinners and also includes those from the [cli-spinners](https://github.com/sindresorhus/cli-spinners) project.
 
 ## Demonstration
 ### Bundled Whirly Spinners
 
-[Play on asciinema](https://asciinema.org/a/88198)
+[Play on asciinema](https://asciinema.org/a/88198?size=big)
 
 ### Bundled Spinners from CLI Spinners
 
 ![](https://raw.githubusercontent.com/sindresorhus/cli-spinners/master/screenshot.gif)
+
+[Play on asciinema](https://asciinema.org/a/9mlcoussb137m32swwuqtb2p1?size=big)
 
 ## Setup
 
@@ -62,7 +64,7 @@ end
 
 ### Configuring Whirly
 
-You can pass the same options you would pass to `.start` to `.configure` instead, to create a persistent configuration that will be used by `.start`:
+You can pass the same options you would pass to `.start` to `.configure` instead to create a persistent configuration that will be used by `.start`:
 
 ```ruby
 Whirly.configure spinner: "dots"
