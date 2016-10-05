@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency 'unicode-display_width'
+  gem.add_dependency "unicode-display_width", "~> 1.1"
 
   gem.required_ruby_version = "~> 2.0"
 end
