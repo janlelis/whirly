@@ -25,6 +25,7 @@ module Whirly
     hide_cursor: true,
     non_tty: false,
     position: "normal",
+    remove_after_stop: false,
     spinner: "whirly",
     spinner_packs: [:whirly, :cli],
     status: nil,
@@ -34,6 +35,7 @@ module Whirly
   SOFT_DEFAULT_OPTIONS = {
     interval: 100,
     mode: "linear",
+    stop: nil,
   }.freeze
 
   class << self
@@ -176,6 +178,7 @@ module Whirly
     return false unless @enabled
     @thread.terminate if @thread
     render(stop_frame || @stop) if stop_frame || @stop
+    unrender if @options[:remove_after_stop]
     @options[:stream].puts if @options[:append_newline]
     @options[:stream].print CLI_COMMANDS[:show_cursor] if @options[:hide_cursor]
     @enabled = false

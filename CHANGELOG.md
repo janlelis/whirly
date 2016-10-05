@@ -12,9 +12,10 @@
 - Introduce spinner packs (to deal with eventual name conflicts, currently: whirly + cli)
 - Add more bundled spinners
 - Update CLI spinners to v0.3.0 (two new spinners)
-- Rename option :use_color to just :color
+- Rename option :use\_color to just :color
 - Option to set spinner can also take frames or proc directly
 - Add ANSI escape mode option
+- Add remove\_after\_stop option
 
 ### 0.1.1
 

@@ -177,6 +177,12 @@ Whirly only gets activated if the current process appears to be a real terminal.
 
 You can set this to `"below"` to let Whirly appear one line below its normal position.
 
+#### `remove_after_stop:`
+
+*Default:* `"false"`
+
+Causes the last frame to be removed after the spinner stopped.
+
 #### `stop:`
 
 *Default:* None

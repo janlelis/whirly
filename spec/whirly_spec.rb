@@ -111,6 +111,14 @@ describe Whirly do
 
       assert_match /[^\n]\z/, @capture.string
     end
+
+    it "removes the spinner after stopping when :remove_after_stop is true" do
+      Whirly.start(hide_cursor: false, remove_after_stop: true)
+      short_sleep
+      Whirly.stop
+
+      assert_match /\e\[u\n\z/, @capture.string
+    end
   end
 
   describe "Spinner" do
