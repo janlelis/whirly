@@ -5,7 +5,7 @@ Meet Whirly: The simple and colorful terminal spinner for Ruby. It comes with X 
 ## Demonstration
 ### Bundled Whirly Spinners
 
-[Play on asciinema](https://asciinema.org/a/88194)
+[Play on asciinema](https://asciinema.org/a/88198)
 
 ### Bundled Spinners from CLI Spinners
 
