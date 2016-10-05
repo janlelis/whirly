@@ -3,6 +3,18 @@ require "minitest/autorun"
 # require "irbtools/binding"
 require "stringio"
 
+def short_sleep
+  sleep 0.1
+end
+
+def medium_sleep
+  sleep 0.4
+end
+
+def long_sleep
+  sleep 1
+end
+
 describe Whirly do
   before do
     Whirly.reset
@@ -15,7 +27,7 @@ describe Whirly do
       spinner = { "frames" => ["first", "second", "third"], "interval" => 5 }
 
       Whirly.start(spinner: spinner)
-      sleep 0.1
+      short_sleep
       Whirly.stop
 
       assert_match /first.*second.*third/m, @capture.string
@@ -25,7 +37,7 @@ describe Whirly do
       spinner = { "proc" => ->(){ "frame" }, "interval" => 5 }
 
       Whirly.start(spinner: spinner)
-      sleep 0.1
+      short_sleep
       Whirly.stop
 
       assert_match /frame/, @capture.string
@@ -36,9 +48,9 @@ describe Whirly do
     it "shows status text alongside spinner" do
       Whirly.start
       Whirly.status = "Fetching…"
-      sleep 0.2
+      medium_sleep
       Whirly.status = "Updates…"
-      sleep 0.2
+      medium_sleep
       Whirly.stop
 
       assert_match /Fetching.*Updates…/m, @capture.string
@@ -46,7 +58,7 @@ describe Whirly do
 
     it "shows initial status" do
       Whirly.start(status: "Initial")
-      sleep 0.1
+      short_sleep
       Whirly.stop
 
       assert_match /Initial/, @capture.string
@@ -58,7 +70,7 @@ describe Whirly do
       spinner = { "frames" => ["first", "second", "third"], "stop" => "STOP", "interval" => 5 }
 
       Whirly.start(spinner: spinner)
-      sleep 0.1
+      short_sleep
       Whirly.stop
 
       assert_match /STOP/, @capture.string
@@ -68,7 +80,7 @@ describe Whirly do
       spinner = { "frames" => ["first", "second", "third"], "interval" => 5 }
 
       Whirly.start(spinner: spinner)
-      sleep 0.1
+      short_sleep
       Whirly.stop("STOP")
 
       assert_match /STOP/, @capture.string
@@ -78,7 +90,7 @@ describe Whirly do
       spinner = { "frames" => ["first", "second", "third"], "interval" => 5 }
 
       Whirly.start(spinner: spinner, stop: "STOP")
-      sleep 0.1
+      short_sleep
       Whirly.stop
 
       assert_match /STOP/, @capture.string
@@ -86,7 +98,7 @@ describe Whirly do
 
     it "appends newline when stopping" do
       Whirly.start(hide_cursor: false)
-      sleep 0.1
+      short_sleep
       Whirly.stop
 
       assert_match /\n\z/, @capture.string
@@ -94,7 +106,7 @@ describe Whirly do
 
     it "appends no newline when stopping when :append_newline option is false" do
       Whirly.start(hide_cursor: false, append_newline: false)
-      sleep 0.1
+      short_sleep
       Whirly.stop
 
       assert_match /[^\n]\z/, @capture.string
@@ -104,16 +116,16 @@ describe Whirly do
   describe "Spinner" do
     describe "Passing a Spinner" do
       it "can be the name of a bundled spinner (whirly-spinners)" do
-        Whirly.start(spinner: "dice")
-        sleep 0.3
+        Whirly.start(spinner: "pencil")
+        medium_sleep
         Whirly.stop
 
-        assert_match /⚀/, @capture.string
+        assert_match /✎/, @capture.string
       end
 
       it "can be the name of a bundled spinner (cli-spinners)" do
         Whirly.start(spinner: "dots3")
-        sleep 0.3
+        medium_sleep
         Whirly.stop
 
         assert_match /⠋/, @capture.string
@@ -121,7 +133,7 @@ describe Whirly do
 
       it "can be an Array of frames" do
         Whirly.start(spinner: ["A", "B"])
-        sleep 0.3
+        medium_sleep
         Whirly.stop
 
         assert_match /A.*B/m, @capture.string
@@ -129,7 +141,7 @@ describe Whirly do
 
       it "can be an Enumerator of frames" do
         Whirly.start(spinner: "A".."B")
-        sleep 0.3
+        medium_sleep
         Whirly.stop
 
         assert_match /A.*B/m, @capture.string
@@ -137,7 +149,7 @@ describe Whirly do
 
       it "can be a Proc which generates frames" do
         Whirly.start(spinner: ->(){ "frame" })
-        sleep 0.3
+        medium_sleep
         Whirly.stop
 
         assert_match /frame/m, @capture.string
@@ -149,7 +161,7 @@ describe Whirly do
         spinner = { "frames" => "A".."H", "mode" => "random", "interval" => 10 }
 
         Whirly.start(spinner: spinner)
-        sleep 0.3
+        medium_sleep
         Whirly.stop
 
         refute /A.*B.*C.*D.*E.*F.*G.*H/m =~ @capture.string
@@ -159,7 +171,7 @@ describe Whirly do
         spinner = { "frames" => "A".."H", "mode" => "reverse", "interval" => 10 }
 
         Whirly.start(spinner: spinner)
-        sleep 0.3
+        medium_sleep
         Whirly.stop
 
         assert_match /H.*G.*F.*E.*D.*C.*B.*A/m, @capture.string
@@ -169,7 +181,7 @@ describe Whirly do
         spinner = { "frames" => "A".."H", "mode" => "swing", "interval" => 10 }
 
         Whirly.start(spinner: spinner)
-        sleep 0.3
+        medium_sleep
         Whirly.stop
 
         assert_match /A.*B.*C.*D.*E.*F.*G.*H.*G.*F.*E.*D.*C.*B.*A/m, @capture.string
@@ -180,7 +192,7 @@ describe Whirly do
   describe "Positioning" do
     it "will render spinner 1 line further below (useful for spinning while git cloning)" do
       Whirly.start(position: "below")
-      sleep 0.1
+      short_sleep
       Whirly.stop
 
       assert_match /\n.*\e\[1A/m, @capture.string
@@ -193,7 +205,7 @@ describe Whirly do
       Whirly.configure spinner: "dots", interval: 5
 
       Whirly.start
-      sleep 0.1
+      short_sleep
       Whirly.stop
 
       assert_match /⠧/, @capture.string
@@ -204,7 +216,7 @@ describe Whirly do
       Whirly.reset
 
       Whirly.start(non_tty: true, stream: @capture)
-      sleep 0.1
+      short_sleep
       Whirly.stop
       assert_match /\A[^⠧]+\z/, @capture.string
     end
