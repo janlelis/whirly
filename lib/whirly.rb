@@ -50,8 +50,13 @@ module Whirly
 
   # set spinner directly or lookup
   def self.configure_spinner(spinner_option)
-    if spinner_option.is_a? Hash
+    case spinner_option
+    when Hash
       spinner = spinner_option.dup
+    when Enumerable
+      spinner = { "frames" => spinner_option.dup }
+    when Proc
+      spinner = { "proc" => spinner_option.dup }
     else
       spinner = nil
       catch(:found){
@@ -191,7 +196,6 @@ module Whirly
     if @options[:position] == "below"
       @options[:stream].print "\n\e[s#{' ' * (Unicode::DisplayWidth.of(@current_frame, @options[:ambiguous_character_width]) + 1)}\e[u\e[1A"
     else
-      # p Unicode::DisplayWidth.of(@current_frame, @options[:ambiguous_character_width])
       @options[:stream].print "\e[s#{' ' * (Unicode::DisplayWidth.of(@current_frame, @options[:ambiguous_character_width]) + 1)}\e[u"
     end
   end

@@ -102,6 +102,48 @@ describe Whirly do
   end
 
   describe "Spinner" do
+    describe "Passing a Spinner" do
+      it "can be the name of a bundled spinner (whirly-spinners)" do
+        Whirly.start(spinner: "dice")
+        sleep 0.3
+        Whirly.stop
+
+        assert_match /⚀/, @capture.string
+      end
+
+      it "can be the name of a bundled spinner (cli-spinners)" do
+        Whirly.start(spinner: "dots3")
+        sleep 0.3
+        Whirly.stop
+
+        assert_match /⠋/, @capture.string
+      end
+
+      it "can be an Array of frames" do
+        Whirly.start(spinner: ["A", "B"])
+        sleep 0.3
+        Whirly.stop
+
+        assert_match /A.*B/m, @capture.string
+      end
+
+      it "can be an Enumerator of frames" do
+        Whirly.start(spinner: "A".."B")
+        sleep 0.3
+        Whirly.stop
+
+        assert_match /A.*B/m, @capture.string
+      end
+
+      it "can be a Proc which generates frames" do
+        Whirly.start(spinner: ->(){ "frame" })
+        sleep 0.3
+        Whirly.stop
+
+        assert_match /frame/m, @capture.string
+      end
+    end
+
     describe "Frame Mode" do
       it "can be set to random" do
         spinner = { "frames" => "A".."H", "mode" => "random", "interval" => 10 }
