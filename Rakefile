@@ -48,3 +48,13 @@ task :update_spinners do
   sh "git submodule update --recursive --remote"
   cp "data/external/cli-spinners/spinners.json", "data/cli-spinners.json"
 end
+
+
+# # #
+# Record ASCIICAST
+
+desc "Record an asciicast via asciinema"
+task :record_acsiicast do
+  sh "cd && asciinema rec whirly-bundled-spinners-v0.2.0.json --title='Whirly v0.2.0 Bundled Spinners' --command='ruby #{File.dirname(__FILE__)}/examples/asciinema_bundled_spinners.rb'"
+end
+
