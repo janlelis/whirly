@@ -3,6 +3,9 @@
 A simple, colorful and customizable terminal spinner library for Ruby. It comes with 17 custom spinners and also includes those from the [cli-spinners](https://github.com/sindresorhus/cli-spinners) project.
 
 ## Demonstration
+
+![](whirly.gif)
+
 ### Bundled Whirly Spinners
 
 [Play on asciinema](https://asciinema.org/a/88198?size=big)
