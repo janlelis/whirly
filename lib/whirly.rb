@@ -22,7 +22,7 @@ module Whirly
     status: nil,
     hide_cursor: true,
     non_tty: false,
-    use_color: !!defined?(Paint),
+    color: !!defined?(Paint),
     color_change_rate: 30,
     append_newline: true,
     position: "normal",
@@ -142,7 +142,7 @@ module Whirly
     return false unless @options[:stream].tty? || @options[:non_tty]
 
     # init color
-    initialize_color if @options[:use_color]
+    initialize_color if @options[:color]
 
     # hide cursor
     @options[:stream].print CLI_COMMANDS[:hide_cursor] if @options[:hide_cursor]
@@ -200,7 +200,7 @@ module Whirly
     unrender
 
     @current_frame = next_frame || @frames.next
-    @current_frame = Paint[@current_frame, @color] if @options[:use_color]
+    @current_frame = Paint[@current_frame, @color] if @options[:color]
     @current_frame += "  #{@status}" if @status
 
     if @options[:position] == "below"

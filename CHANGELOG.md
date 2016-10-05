@@ -12,6 +12,7 @@
 - Introduce spinner packs (to deal with eventual name conflicts, currently: whirly + cli)
 - Add more bundled spinners
 - Update CLI spinners to v0.3.0 (two new spinners)
+- Rename option :use_color to just :color
 
 ### 0.1.1
 
