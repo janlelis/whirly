@@ -62,6 +62,8 @@ Whirly.start spinner: "pong", use_color: false, status: "The Game of Pong" do
 end
 ```
 
+Also see the [examples directory](https://github.com/janlelis/whirly/tree/master/examples) for example scripts.
+
 ### Configuring Whirly
 
 You can pass the same options you would pass to `.start` to `.configure` instead to create a persistent configuration that will be used by `.start`:
