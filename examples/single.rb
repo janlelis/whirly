@@ -3,4 +3,4 @@ require "paint"
 
 # Call a single spinner from the command-line
 
-Whirly.start(spinner: $*[0], use_color: false){ sleep(($*[1] || 10).to_i) }
+Whirly.start(spinner: $*[0], status: $*[2] || $*[0], use_color: false){ sleep(($*[1] || 10).to_i) }
