@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.2.2
+
+- More emotions for whirly (the spinner)
+
 ### 0.2.1
 
 - Use macOS terminal app compatible ANSI sequences

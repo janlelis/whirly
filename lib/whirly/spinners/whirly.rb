@@ -3,7 +3,6 @@ require "json"
 module Whirly
   module Spinners
     WHIRLY = {
-      "whirly"              => { "proc" => ->(){ [0x1F600 + rand(55) ].pack("U") }, "interval" => 200 },
       "random_dots"         => { "proc" => ->(){ [ 0x2800 + rand(256)].pack("U") }, "interval" => 100 },
       "circled_letter"      => { "proc" => ->(){ [ 0x24B6 + rand(26) ].pack("U") }, "interval" => 120 },
       "circled_number"      => { "proc" => ->(){ [ 0x2460 + rand(9)  ].pack("U") }, "interval" => 120 },
