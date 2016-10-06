@@ -1,6 +1,6 @@
 # Whirly 😀 [![[version]](https://badge.fury.io/rb/whirly.svg)](http://badge.fury.io/rb/whirly)  [![[travis]](https://travis-ci.org/janlelis/whirly.png)](https://travis-ci.org/janlelis/whirly)
 
-A simple, colorful and customizable terminal spinner library for Ruby. It comes with 17 custom spinners and also includes those from the [cli-spinners](https://github.com/sindresorhus/cli-spinners) project.
+A simple, colorful and customizable terminal spinner library for Ruby. It comes with 18 custom spinners and also includes those from the [cli-spinners](https://github.com/sindresorhus/cli-spinners) project.
 
 ## Demonstration
 

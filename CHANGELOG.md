@@ -3,6 +3,7 @@
 ### 0.2.2
 
 - More emotions for whirly (the spinner)
+- Add cat spinner
 
 ### 0.2.1
 
