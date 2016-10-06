@@ -107,9 +107,9 @@ See [`data/whirly-static-spinnes.json`](https://github.com/janlelis/whirly/blob/
 
 #### `spinner:`
 
-You have multiple ways of telling *Whirly* which spinner should be used. You can pass the following to the `spinner:` option:
-
 *Default:* `"whirly"`
+
+You have multiple ways of telling *Whirly* which spinner should be used. You can pass the following to the `spinner:` option:
 
 - The name of a bundled spinner
 - An array of spinner frames to use
@@ -140,7 +140,7 @@ If set to `2`, ambiguous Unicode charatcers will be treated as 2 colums wide. Se
 
 *Default:* `"restore"`
 
-Can be set to `"line"` to use an different way of producing ANSI escape sequences (experimental)
+Can be set to `"line"` to use an different way of producing ANSI escape sequences necessary (experimental).
 
 #### `append_newline:`
 
@@ -170,7 +170,7 @@ By default, the terminal cursor gets hidden while displaying the spinner. This a
 
 *Default:* `"linear"`
 
-Instructs Whirly to play the frames in a different order. Possible values: `"linear"`, `"reverse"`, `"swing"`, and `"random"`. See spinner format section for more details.
+Instructs Whirly to play the frames in a different order. Possible values: `"linear"`, `"reverse"`, `"swing"`, and `"random"`. See [spinner format section](https://github.com/janlelis/whirly#mode-1) for more details.
 
 #### `non_tty:`
 
@@ -186,7 +186,7 @@ You can set this to `"below"` to let Whirly appear one line below its normal pos
 
 #### `remove_after_stop:`
 
-*Default:* `"false"`
+*Default:* `false`
 
 Causes the last frame to be removed after the spinner stopped.
 
