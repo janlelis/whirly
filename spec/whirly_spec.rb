@@ -1,14 +1,15 @@
 require_relative "../lib/whirly"
 require "minitest/autorun"
+require "paint"
 # require "irbtools/binding"
 require "stringio"
 
 def short_sleep
-  sleep 0.15
+  sleep 0.2
 end
 
 def medium_sleep
-  sleep 0.5
+  sleep 0.6
 end
 
 def long_sleep
@@ -169,10 +170,10 @@ describe Whirly do
         spinner = { "frames" => "A".."H", "mode" => "random", "interval" => 10 }
 
         Whirly.start(spinner: spinner)
-        medium_sleep
+        short_sleep
         Whirly.stop
 
-        refute /A.*B.*C.*D.*E.*F.*G.*H/m =~ @capture.string
+        refute /\A.*?A.*?B.*?C.*?D.*?E.*?F.*?G.*?H/m =~ @capture.string
       end
 
       it "can be set to reverse" do
@@ -195,6 +196,91 @@ describe Whirly do
         assert_match /A.*B.*C.*D.*E.*F.*G.*H.*G.*F.*E.*D.*C.*B.*A/m, @capture.string
       end
     end
+
+    describe "Interval" do
+      it "spins more often when interval is lower" do
+        capture1 = StringIO.new
+        Whirly.start(stream: capture1, interval: 100)
+        medium_sleep
+        Whirly.stop
+
+        capture2 = StringIO.new
+        Whirly.start(stream: capture2, interval: 50)
+        medium_sleep
+        Whirly.stop
+
+        assert capture1.string.size < capture2.string.size
+      end
+    end
+  end
+
+  describe "Colors" do
+    it "will use no color when :color option is falsey" do
+      Whirly.start(color: false)
+      short_sleep
+      Whirly.stop
+
+      refute /\[38;5;/ =~ @capture.string
+    end
+
+    it "will use color when :color option is truthy" do
+      Whirly.start(color: true)
+      short_sleep
+      Whirly.stop
+
+      assert /\[38;5;/ =~ @capture.string
+    end
+
+    it "defaults :color to true when the paint gem is available" do
+      Whirly.reset
+      Whirly.configure
+      assert Whirly.options[:color]
+    end
+
+    # it "defaults :color to true when the paint gem is not available" do
+    #   remember_paint = Paint
+    #   Object.send(:remove_const, :Paint)
+    #   Whirly.reset
+    #   Whirly.configure
+    #   Object.send(:const_set, :Paint, remember_paint)
+    #   refute Whirly.options[:color]
+    # end
+
+    it "changes the the color" do
+      Whirly.start
+      long_sleep
+      Whirly.stop
+
+      colors = @capture.string.scan(/\[38;5;(\d+)m/).flatten
+      assert colors.uniq.size > 1
+    end
+  end
+
+  describe "Cursor" do
+    it "hides (and later shows) cursor when :hide_cursor => true option is given (default)" do
+      Whirly.start(hide_cursor: true)
+      short_sleep
+      Whirly.stop
+
+      assert_match /\[?25l.*\[?25h/m, @capture.string
+    end
+
+    it "does not hide cursor when :hide_cursor => false option is given" do
+      Whirly.start(hide_cursor: false)
+      short_sleep
+      Whirly.stop
+
+      refute /\[?25l.*\[?25h/m =~ @capture.string
+    end
+  end
+
+  describe "Spinner Packs" do
+    it "can be passed an alternative set of :spinner_packs" do
+      assert_raises ArgumentError do
+        Whirly.start(spinner_packs: [:cli], spinner: "cat") # whirly is part of :whirly, but not of :cli
+        Whirly.stop
+      end
+    end
   end
 
   describe "Ansi Escape Mode" do
@@ -210,6 +296,34 @@ describe Whirly do
       medium_sleep
       Whirly.stop
       assert_match /\e\[G.*\e\[1K/m, @capture.string
+    end
+  end
+
+  describe "Streams and TTYs" do
+    it "will not output anything on non-ttys" do
+      Whirly.reset
+      @capture = StringIO.new
+      Whirly.start(stream: @capture)
+      short_sleep
+      Whirly.stop
+      assert_equal "", @capture.string
+    end
+
+    it "will output something on non-ttys when :non_tty => true option is given" do
+      Whirly.reset
+      @capture = StringIO.new
+      Whirly.start(stream: @capture, non_tty: true)
+      short_sleep
+      Whirly.stop
+      refute_equal "", @capture.string
+    end
+
+    it "can be configured to which stream whirly's output goes" do
+      iolike = StringIO.new
+      Whirly.start(stream: iolike, non_tty: true)
+      short_sleep
+      Whirly.stop
+      refute_equal "", iolike.string
     end
   end
 
@@ -263,4 +377,3 @@ describe Whirly do
     end
   end
 end
-
