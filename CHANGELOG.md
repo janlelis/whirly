@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.3.0
+
+- Fix bug that in some cases whirly output would be shown on non-ttys
+
 ### 0.2.2
 
 - More emotions for whirly (the spinner)

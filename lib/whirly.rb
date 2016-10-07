@@ -133,13 +133,6 @@ module Whirly
     # optionally overwrite configuration on start
     configure(**options)
 
-    # ensure cursor is visible after exit the program (only register for the very first time)
-    if (!defined?(@at_exit_handler_registered) || !@at_exit_handler_registered) && @options[:hide_cursor]
-      @at_exit_handler_registered = true
-      stream = @options[:stream]
-      at_exit{ stream.print CLI_COMMANDS[:show_cursor] }
-    end
-
     # only enable once
     return false if defined?(@enabled) && @enabled
 
@@ -148,6 +141,13 @@ module Whirly
 
     # only do something if we are on a real terminal (or forced)
     return false unless @options[:stream].tty? || @options[:non_tty]
+
+    # ensure cursor is visible after exit the program (only register for the very first time)
+    if (!defined?(@at_exit_handler_registered) || !@at_exit_handler_registered) && @options[:hide_cursor]
+      @at_exit_handler_registered = true
+      stream = @options[:stream]
+      at_exit{ stream.print CLI_COMMANDS[:show_cursor] }
+    end
 
     # init color
     initialize_color if @options[:color]
@@ -176,12 +176,14 @@ module Whirly
 
   def self.stop(stop_frame = nil)
     return false unless @enabled
+    @enabled = false
+    return false unless @options[:stream].tty? || @options[:non_tty]
+
     @thread.terminate if @thread
     render(stop_frame || @stop) if stop_frame || @stop
     unrender if @options[:remove_after_stop]
     @options[:stream].puts if @options[:append_newline]
     @options[:stream].print CLI_COMMANDS[:show_cursor] if @options[:hide_cursor]
-    @enabled = false
 
     true
   end
