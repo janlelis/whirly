@@ -3,6 +3,7 @@
 ### 0.3.0
 
 - Fix bug that in some cases whirly output would be shown on non-ttys
+- New spinners: card, cloud, photo, banknote, white_square
 
 ### 0.2.2
 
