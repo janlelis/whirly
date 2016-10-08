@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 0.3.0
+### 0.2.3
 
 - Fix bug that in some cases whirly output would be shown on non-ttys
 - New spinners: card, cloud, photo, banknote, white_square
