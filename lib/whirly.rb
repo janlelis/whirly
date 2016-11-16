@@ -167,8 +167,11 @@ module Whirly
 
     # idiomatic block syntax support
     if block_given?
-      yield
-      Whirly.stop
+      begin
+        yield
+      ensure
+        Whirly.stop
+      end
     end
 
     true
