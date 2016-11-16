@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### 0.2.4
+
+- Fix bug that the Whirly thread will also stop when main thread throws error
+  (patch by @monkbroc)
+- New spinner: xberg
+
 ### 0.2.3
 
 - Fix bug that in some cases whirly output would be shown on non-ttys
