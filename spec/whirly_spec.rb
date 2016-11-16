@@ -376,4 +376,18 @@ describe Whirly do
       refute_predicate Whirly, :enabled?
     end
   end
+
+  describe "Error Handling" do
+    it "stops the spinner, when the main thread threw an exception [gh#3]" do
+      begin
+        Whirly.start status: "working" do
+          short_sleep
+          raise 'error!'
+        end
+      rescue
+      end
+
+      refute_predicate Whirly, :enabled?
+    end
+  end
 end
