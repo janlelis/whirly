@@ -45,7 +45,7 @@ sleep 5
 print "\033c"
 puts Paint["Pong", :underline]
 
-Whirly.start spinner: "pong", use_color: false, status: "Two computers in a game of Pong" do
+Whirly.start spinner: "pong", color: false, status: "Two computers in a game of Pong" do
   sleep 9
 end
 

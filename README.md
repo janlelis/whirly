@@ -60,7 +60,7 @@ Whirly.stop
 The `start` method takes a lot of options, like which spinner to use or an initial status. See further below for the full description of available options.
 
 ```ruby
-Whirly.start spinner: "pong", use_color: false, status: "The Game of Pong" do
+Whirly.start spinner: "pong", color: false, status: "The Game of Pong" do
   sleep 10
 end
 ```
