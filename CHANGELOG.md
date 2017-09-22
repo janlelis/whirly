@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.2.5
+
+- Update CLI Spinners to 1.0.1
+
 ### 0.2.4
 
 - Fix bug that the Whirly thread will also stop when main thread throws error
