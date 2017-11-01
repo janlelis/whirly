@@ -1,8 +1,12 @@
 ## CHANGELOG
 
+### 0.2.6
+
+- Update CLI spinners to 1.1.0 (adds "weather" and "christmas")
+
 ### 0.2.5
 
-- Update CLI Spinners to 1.0.1
+- Update CLI spinners to 1.0.1
 
 ### 0.2.4
 
