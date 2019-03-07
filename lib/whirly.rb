@@ -182,7 +182,11 @@ module Whirly
     @enabled = false
     return false unless @options[:stream].tty? || @options[:non_tty]
 
-    @thread.terminate if @thread
+    if @thread
+      @thread.terminate
+      @thread.join
+    end
+
     render(stop_frame || @stop) if stop_frame || @stop
     unrender if @options[:remove_after_stop]
     @options[:stream].puts if @options[:append_newline]
