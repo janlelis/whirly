@@ -22,5 +22,5 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "unicode-display_width", "~> 1.1"
 
-  gem.required_ruby_version = "~> 2.0"
+  gem.required_ruby_version = "~> 3.0"
 end
