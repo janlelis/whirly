@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### Next
+
+- Allow more recent versions of Ruby and unicode-display_width gem
+- Update CLI spinners to 2.6.0
+
 ### 0.2.6
 
 - Update CLI spinners to 1.1.0 (adds "weather" and "christmas")
