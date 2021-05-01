@@ -254,5 +254,5 @@ A frame to be used to end the spinner icon animation.
 
 ## MIT License
 
-- Copyright (C) 2016 Jan Lelis <http://janlelis.com>. Released under the MIT license.
+- Copyright (C) 2016 Jan Lelis <https://janlelis.com>. Released under the MIT license.
 - Contains data from cli-spinners:  MIT License, Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)

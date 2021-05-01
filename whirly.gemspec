@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.summary       = "Whirly: The friendly terminal spinner"
   gem.description   = "Simple terminal spinner with support for custom spinners. Includes spinners from npm's cli-spinners."
   gem.authors       = ["Jan Lelis"]
-  gem.email         = ["mail@janlelis.de"]
+  gem.email         = ["hi@ruby.consulting"]
   gem.homepage      = "https://github.com/janlelis/whirly"
   gem.license       = "MIT"
 
