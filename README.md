@@ -12,7 +12,7 @@ A simple, colorful and customizable terminal spinner library for Ruby. It comes 
 
 ### Bundled Spinners from CLI Spinners
 
-![](https://raw.githubusercontent.com/sindresorhus/cli-spinners/master/screenshot.gif)
+![](https://raw.githubusercontent.com/sindresorhus/cli-spinners/main/screenshot.gif)
 
 [Play on asciinema](https://asciinema.org/a/9mlcoussb137m32swwuqtb2p1?size=big)
 
@@ -65,7 +65,7 @@ Whirly.start spinner: "pong", color: false, status: "The Game of Pong" do
 end
 ```
 
-Also see the [examples directory](https://github.com/janlelis/whirly/tree/master/examples) for example scripts.
+Also see the [examples directory](https://github.com/janlelis/whirly/tree/main/examples) for example scripts.
 
 ### Configuring Whirly
 
@@ -99,7 +99,7 @@ end
 
 ### Included Spinners
 
-See [`data/whirly-static-spinnes.json`](https://github.com/janlelis/whirly/blob/master/data/whirly-static-spinners.json), [`lib/whirly/spinners/whirly.rb`](https://github.com/janlelis/whirly/blob/master/lib/whirly/spinners/whirly.rb) and [cli-spinners](https://github.com/sindresorhus/cli-spinners). You can get a demonstration of all bundled spinners by running the [`examples/all_spinners.rb`](https://github.com/janlelis/whirly/blob/master/examples/all_spinners.rb) script.
+See [`data/whirly-static-spinnes.json`](https://github.com/janlelis/whirly/blob/main/data/whirly-static-spinners.json), [`lib/whirly/spinners/whirly.rb`](https://github.com/janlelis/whirly/blob/main/lib/whirly/spinners/whirly.rb) and [cli-spinners](https://github.com/sindresorhus/cli-spinners). You can get a demonstration of all bundled spinners by running the [`examples/all_spinners.rb`](https://github.com/janlelis/whirly/blob/main/examples/all_spinners.rb) script.
 
 ## All `Whirly.start` / `Whirly.configure` Configuration Options
 
@@ -212,7 +212,7 @@ Whirly comes with spinners from different sources. This options defines which so
 
 *Default:* `$stdout`
 
-You can pass in an [IO](https://ruby-doc.org/core-2.3.1/IO.html)-like object, if you want to display *Whirly* on an other stream than `$stdout`.
+You can pass in an [IO](https://ruby-doc.org/core/IO.html)-like object, if you want to display *Whirly* on an other stream than `$stdout`.
 
 ## Full Spinner Hash Format
 
@@ -220,7 +220,7 @@ A full spinner is defined by a hash which can have the following key-value pairs
 
 ### `"frames"`
 
-An [Array](https://ruby-doc.org/core-2.3.1/Array.html) or [Enumerable](https://ruby-doc.org/core-2.3.1/Enumerable.html) of strings that will be used as the spinner icon.
+An [Array](https://ruby-doc.org/core/Array.html) or [Enumerable](https://ruby-doc.org/core/Enumerable.html) of strings that will be used as the spinner icon.
 
 ### `"proc"`
 
@@ -239,7 +239,7 @@ The order in which frames should be played. It can be one of the following:
 - `"swing"`: Cycle through all frames in normal order, and then in reverse order, but only play first and last frame once each round
 - `"random"`: Play random frames
 
-Please note: While `"linear"` also works with frames that are just an [Enumerable](https://ruby-doc.org/core-2.3.1/Enumerable.html), all other frame modes require the object to be representable as an [Array](https://ruby-doc.org/core-2.3.1/Array.html).
+Please note: While `"linear"` also works with frames that are just an [Enumerable](https://ruby-doc.org/core/Enumerable.html), all other frame modes require the object to be representable as an [Array](https://ruby-doc.org/core/Array.html).
 
 ### `"stop"`
 
@@ -250,7 +250,7 @@ A frame to be used to end the spinner icon animation.
 - Interval is milliseconds, but don't rely on exact timing
 - Will not do anything if stream is not a real console (or `non_tty: true` is passed)
 - Colors not working? Be sure to include the [paint](https://github.com/janlelis/paint/) gem in your Gemfile
-- Don't set very short intervals (or it might affect performance substantly)
+- Don't set very short intervals (or it might affect performance substantially)
 
 ## MIT License
 
