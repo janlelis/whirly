@@ -220,7 +220,7 @@ describe Whirly do
       short_sleep
       Whirly.stop
 
-      refute /\[38;5;/ =~ @capture.string
+      refute /\[38;/ =~ @capture.string
     end
 
     it "will use color when :color option is truthy" do
@@ -228,7 +228,7 @@ describe Whirly do
       short_sleep
       Whirly.stop
 
-      assert /\[38;5;/ =~ @capture.string
+      assert /\[38;/ =~ @capture.string
     end
 
     it "defaults :color to true when the paint gem is available" do
@@ -251,7 +251,7 @@ describe Whirly do
       long_sleep
       Whirly.stop
 
-      colors = @capture.string.scan(/\[38;5;(\d+)m/).flatten
+      colors = @capture.string.scan(/\[38;.*?m/).flatten
       assert colors.uniq.size > 1
     end
   end
