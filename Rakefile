@@ -35,7 +35,7 @@ end
 
 desc "#{gemspec.name} | Spec"
 task :spec do
-  sh "for file in spec/*.rb; do ruby $file; done"
+  ruby "spec/whirly_spec.rb"
 end
 task default: :spec
 
