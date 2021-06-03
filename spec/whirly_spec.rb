@@ -5,11 +5,11 @@ require "paint"
 require "stringio"
 
 def short_sleep
-  sleep 0.2
+  sleep 0.4
 end
 
 def medium_sleep
-  sleep 0.6
+  sleep 0.7
 end
 
 def long_sleep
@@ -201,12 +201,12 @@ describe Whirly do
       it "spins more often when interval is lower" do
         capture1 = StringIO.new
         Whirly.start(stream: capture1, interval: 100)
-        medium_sleep
+        long_sleep
         Whirly.stop
 
         capture2 = StringIO.new
         Whirly.start(stream: capture2, interval: 50)
-        medium_sleep
+        long_sleep
         Whirly.stop
 
         assert capture1.string.size < capture2.string.size
