@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### Next
+### 0.3.0
 
 - Allow more recent versions of Ruby and unicode-display_width gem
 - Update CLI spinners to 2.6.0
