@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         ruby:
+        - '3.3'
         - 3.0
         - 2.7
         - 2.6
