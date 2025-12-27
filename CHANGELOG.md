@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 0.4.0
+
+- Allow Ruby 4.x
+- Add json (default) gem as dependency
+
 ### 0.3.0
 
 - Allow more recent versions of Ruby and unicode-display_width gem

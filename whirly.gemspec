@@ -21,6 +21,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency "unicode-display_width", ">= 1.1"
+  gem.add_dependency "json"
 
-  gem.required_ruby_version = ">= 2.0", "< 4.0"
+  gem.required_ruby_version = ">= 2.0", "< 5.0"
 end
