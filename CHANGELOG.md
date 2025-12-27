@@ -4,6 +4,7 @@
 
 - Allow Ruby 4.x
 - Add json (default) gem as dependency
+- Update CLI spinners to 3.3.0
 
 ### 0.3.0
 
