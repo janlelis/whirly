@@ -167,13 +167,13 @@ describe Whirly do
 
     describe "Frame Mode" do
       it "can be set to random" do
-        spinner = { "frames" => "A".."H", "mode" => "random", "interval" => 10 }
+        spinner = { "frames" => "A".."M", "mode" => "random", "interval" => 10 }
 
         Whirly.start(spinner: spinner)
         short_sleep
         Whirly.stop
 
-        refute /\A.*?A.*?B.*?C.*?D.*?E.*?F.*?G.*?H/m =~ @capture.string
+        refute /\A.*?A.*?B.*?C.*?D.*?E.*?F.*?G.*?H.*?I.*?J.*?K.*?L.*?M/m =~ @capture.string
       end
 
       it "can be set to reverse" do
